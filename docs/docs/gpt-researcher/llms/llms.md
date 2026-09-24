@@ -3,7 +3,7 @@
 As described in the [introduction](/docs/gpt-researcher/gptr/config), the default LLM and embedding is OpenAI due to its superior performance and speed. 
 With that said, GPT Researcher supports various open/closed source LLMs and embeddings, and you can easily switch between them by updating the `SMART_LLM`, `FAST_LLM` and `EMBEDDING` env variables. You might also need to include the provider API key and corresponding configuration params.
 
-Current supported LLMs are `openai`, `anthropic`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `groq`, `bedrock`, `litellm`, `minimax`, `atlascloud` and `nebius`.
+Current supported LLMs are `openai`, `anthropic`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `groq`, `bedrock`, `litellm`, `minimax`, `atlascloud`, `nebius` and `cheaperinference`.
 
 Current supported embeddings are `openai`, `azure_openai`, `cohere`, `google_vertexai`, `google_genai`, `fireworks`, `ollama`, `together`, `mistralai`, `huggingface`, `nomic` ,`voyageai`, `bedrock` and `nebius`.
 
@@ -453,6 +453,24 @@ EMBEDDING=nebius:Qwen/Qwen3-Embedding-8B
 ```
 
 Browse the full model catalog [_here_](https://tokenfactory.nebius.com/models). To point at a self-hosted or regional endpoint, set `NEBIUS_BASE_URL` (defaults to `https://api.tokenfactory.nebius.com/v1`).
+
+## Cheaper Inference
+
+[Cheaper Inference](https://cheaperinference.com) is an LLM gateway with an OpenAI-compatible API. It gives access to models from several labs (OpenAI, Anthropic, Google, DeepSeek, Zhipu and more) with one API key.
+Each model costs 15–60% less than the list price of its lab.
+
+Sign up at [cheaperinference.com](https://cheaperinference.com/signup) to get an API key, then set the following environment variables:
+
+```env
+CHEAPER_INFERENCE_API_KEY=[Your Key]
+FAST_LLM=cheaperinference:gpt-5.4-mini
+SMART_LLM=cheaperinference:gpt-5.4
+STRATEGIC_LLM=cheaperinference:gpt-5.4
+```
+
+Model ids have no vendor prefix (for example `gpt-5.4-mini`, `gpt-5.4`, `claude-sonnet-5`, `gemini-3.1-pro`, `deepseek-v4-flash`, `glm-5.3`). See the full model list [_here_](https://cheaperinference.com/#models).
+
+Cheaper Inference does not serve embeddings. Set `EMBEDDING` to a different provider, for example the default `openai:text-embedding-3-small` (needs `OPENAI_API_KEY`).
 
 ## vLLM
 ```env
