@@ -38,6 +38,7 @@ _SUPPORTED_PROVIDERS = {
     "minimax",
     "atlascloud",
     "nebius",
+    "cheaperinference",
 }
 
 NO_SUPPORT_TEMPERATURE_MODELS = [
@@ -343,6 +344,14 @@ class GenericLLMProvider:
             # NEBIUS_BASE_URL overrides the default endpoint (self-hosted / regional)
             llm = ChatOpenAI(openai_api_base=os.getenv("NEBIUS_BASE_URL", 'https://api.tokenfactory.nebius.com/v1'),
                      openai_api_key=os.environ["NEBIUS_API_KEY"],
+                     **kwargs
+                )
+        elif provider == "cheaperinference":
+            _check_pkg("langchain_openai")
+            from langchain_openai import ChatOpenAI
+
+            llm = ChatOpenAI(openai_api_base='https://api.cheaperinference.com/v1',
+                     openai_api_key=os.environ["CHEAPER_INFERENCE_API_KEY"],
                      **kwargs
                 )
         elif provider == 'netmind':
